@@ -16,8 +16,8 @@ services:
         XNAT_DATASOURCE_USERNAME: ${XNAT_DATASOURCE_USERNAME}
         XNAT_DATASOURCE_PASSWORD: ${XNAT_DATASOURCE_PASSWORD}
         TOMCAT_XNAT_FOLDER: ${TOMCAT_XNAT_FOLDER}
-        XNAT_ROOT: ${XNAT_ROOT}
-        XNAT_HOME: ${XNAT_HOME}
+        XNAT_ROOT: /data/xnat
+        XNAT_HOME: /data/xnat/home 
         XNAT_EMAIL: ${XNAT_EMAIL}
     ports:
       - 8104:8104
@@ -52,7 +52,9 @@ services:
   xnat-nginx:
     image: nginx:${NGINX_VERSION}
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/nginx-ssl.conf:/etc/nginx/nginx.conf
+      - ./certs/cert.crt:/etc/nginx/certs/cert.crt
+      - ./certs/key.key:/etc/nginx/certs/key.key
     ports:
       - "80:80"
       - "443:443"
